@@ -1,0 +1,273 @@
+body {
+    padding-left: 90px;
+    padding-right: 90px;
+    box-sizing: border-box;
+}
+
+// the Grid columns function:
+$total: 12;
+
+@function col-width($column) {
+    @return percentage($column/$total);
+}
+
+@for $i from 1 through $total {
+    .col-#{$i} {
+        width: col-width($i);
+    }
+
+}
+
+//our main color: 
+$mainColor: #5e3c89;
+
+// a list of values: 
+$navColors: $mainColor #ffd110 $mainColor #ffd110;
+
+//looping over the colors: 
+@for $i from 1 through 4 {
+    li:nth-child(#{$i}) {
+        border: solid 2px;
+        border-color: nth($navColors, $i);
+        width: 100px;
+        border-radius: 6px;
+        padding: 3px;
+
+    }
+
+}
+
+//centering the X axis: 
+@mixin flexXCenter {
+    display: flex;
+    justify-content: center;
+}
+
+//centering the Y axis: 
+@mixin flexYCenter {
+    display: flex;
+    align-items: center;
+
+}
+
+//centering both : 
+@mixin flexBoth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+//changing direction 
+@mixin directionCol {
+    flex-direction: column;
+}
+
+//colors
+@mixin color($textColor: black, $backgroundColor: white) {
+    background-color: $backgroundColor;
+    color: $textColor;
+}
+
+//using mixin
+.container1 {
+    @include flexYCenter;
+    @include directionCol;
+    @include color(white, $mainColor);
+}
+
+@mixin border {
+    border: solid 0.5px white;
+}
+
+@mixin aLine {
+    border-bottom: solid 1px gray;
+}
+
+@mixin centerText {
+    text-align: center;
+}
+
+//headings 
+@mixin headings ($size) {
+    @if($size ==h1) {
+        font-size: 2.5em;
+        font-weight: 800;
+        // color: pink
+    }
+
+    @else if($size ==h2) {
+        font-size: 1.8em;
+        font-weight: 700;
+        // color: purple;
+    }
+
+    @else if($size ==h3) {
+        font-size: 1.6em;
+        font-weight: 700;
+        // color: pink
+    }
+
+    @else if($size ==h4) {
+        font-size: 1.4em;
+        font-weight: 500;
+        // color: pink
+    }
+
+    @else if($size ==h5) {
+        font-size: 1.2em;
+        font-weight: 500;
+        // color: pink
+    }
+
+    @else {
+        font-size: 1em;
+        font-weight: 500;
+    }
+
+}
+
+h3 {
+    @include headings(h3);
+}
+
+h1 {
+    @include headings(h1);
+}
+
+h4 {
+    @include headings(h4);
+}
+
+h2 {
+    @include headings(h2);
+    @include centerText;
+}
+
+//using nesting
+section {
+    display: flex;
+
+    div {
+        // border: solid red 0.5px;
+        height: 200px;
+        @include centerText;
+        padding: 5px;
+        @include aLine;
+    }
+}
+
+article {
+    @include directionCol;
+    // @include flexYCenter;
+    @include border;
+    height: 350px;
+    padding: 10px;
+    @include aLine;
+    padding: 15px;
+    padding-bottom: 25px;
+
+    header {
+        @include border;
+        height: 100px;
+        @include centerText;
+    }
+
+    div {
+        display: flex;
+        @include border;
+        height: 100%;
+
+        section {
+            // border: solid red 0.5px;
+            height: 100%;
+        }
+
+        aside {
+            // border: solid red 0.2px;
+            height: 100%;
+
+        }
+    }
+
+
+    footer {
+        @include border;
+        height: 70px;
+
+
+    }
+
+}
+
+
+
+.container2 {
+    @include flexXCenter;
+
+    // border: solid red 2px;
+    height: 300px;
+
+    .con {
+        // border: solid 2px blue;
+        @include flexYCenter;
+        @include directionCol;
+        border-radius: 10px;
+        margin: 3px;
+
+        div {
+            // border: solid black 1px;
+            width: 100%;
+
+
+        }
+
+        .top {
+            height: 100px;
+            @include color(white, $mainColor);
+            @include centerText;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            padding-top: 5px;
+        }
+
+        .middle {
+            height: 70px;
+            @include color($mainColor, white);
+            @include centerText;
+            @include aLine;
+            padding-top: 5px;
+        }
+
+        .bottom {
+            @extend .top;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            border-top-right-radius: 0px;
+            border-top-left-radius: 0px;
+        }
+    }
+
+
+
+}
+
+button {
+    border: solid white 1px;
+    border-radius: 10px;
+    width: 200px;
+    margin-bottom: 15px;
+}
+
+ul {
+    @include flexYCenter;
+    list-style-type: none;
+    height: 100%;
+
+    li {
+        padding-right: 10px;
+        color: $mainColor;
+        // border: solid $mainColor 1px;
+
+    }
+
+}
